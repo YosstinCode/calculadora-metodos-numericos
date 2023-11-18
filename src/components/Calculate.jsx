@@ -6,6 +6,7 @@ import SubTitle from './SubTitle'
 import TableMethods from './TableMethods'
 import ProcedureNewton from './ProcedureNewton'
 import ProcedureBisection from './ProcedureBisection'
+import Raices from './Raices'
 
 const Calculate = () => {
   const { func } = useContext(FuncionContext)
@@ -22,6 +23,8 @@ const Calculate = () => {
         <SubTitle>Gráfica</SubTitle>
         <Graph />
         </div>
+        <SubTitle>{func.metodo !== 'Newton' ? 'Raíces' : 'Maximos o minimos'}</SubTitle>
+        <Raices metodo={func.metodo} root={func.root} froot={func.froot}/>
         <SubTitle>Tabla del Metodo</SubTitle>
         <TableMethods/>
         <SubTitle>Procedimiento</SubTitle>

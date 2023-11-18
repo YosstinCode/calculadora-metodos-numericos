@@ -13,49 +13,65 @@ const TableMethods = () => {
   const { func, setFunc } = useContext(FuncionContext)
 
   useEffect(() => {
-    console.log(func.metodo)
-    let dataSet
-    let raiz
-    let froot
-    let funcStr
-    let dyStr
-    let dy2Str
-    if (func.metodo === 'Newton') {
+    try {
       console.log(func.metodo)
-      const { table, root, y, funcString, dyString, dy2String } = methodNewton(func.funcion, func.xi)
-      raiz = root
-      dataSet = table
-      froot = y
-      funcStr = funcString
-      dyStr = dyString
-      dy2Str = dy2String
-    } else {
-      const { table, root, funcString } = methodBisection(func.funcion, func.xi, func.xf)
-      dataSet = table
-      raiz = root
-      funcStr = funcString
-    }
-    const columns = dataSet[0]
-    const iteraciones = dataSet.slice(1, dataSet.length)
+      let dataSet
+      let raiz
+      let froot
+      let funcStr
+      let dyStr
+      let dy2Str
+      if (func.metodo === 'Newton') {
+        console.log(func.metodo)
+        const { table, root, y, funcString, dyString, dy2String } = methodNewton(func.funcion, func.xi)
+        raiz = root
+        dataSet = table
+        froot = y
+        funcStr = funcString
+        dyStr = dyString
+        dy2Str = dy2String
+      } else {
+        const { table, root, funcString } = methodBisection(func.funcion, func.xi, func.xf)
+        dataSet = table
+        raiz = root
+        funcStr = funcString
+      }
+      const columns = dataSet[0]
+      const iteraciones = dataSet.slice(1, dataSet.length)
 
-    setData(iteraciones)
-    setColumn(columns)
-    if (!root) {
+      setData(iteraciones)
+      setColumn(columns)
+      if (!root) {
+        setFunc({
+          ...func,
+          root: raiz,
+          froot,
+          iteraciones,
+          funcStr,
+          dyStr,
+          dy2Str
+        })
+      }
+      setRoot(true)
+      if (root) {
+        setFunc({
+          ...func,
+          isRoot: root
+        })
+      }
+    } catch (error) {
+      alert('Error en la función, verifica que esté bien escrita solo funciona con la variable x en minuscula')
       setFunc({
-        ...func,
-        root: raiz,
-        froot,
-        iteraciones,
-        funcStr,
-        dyStr,
-        dy2Str
-      })
-    }
-    setRoot(true)
-    if (root) {
-      setFunc({
-        ...func,
-        isRoot: root
+        funcion: '',
+        calcular: false,
+        error: false,
+        metodo: '',
+        xi: '',
+        xf: '',
+        root: '',
+        froot: '',
+        clear: true,
+        iteraciones: []
       })
     }
   }, [root, setFunc])

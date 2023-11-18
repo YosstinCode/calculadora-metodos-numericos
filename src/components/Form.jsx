@@ -18,9 +18,9 @@ const Form = () => {
   const method = watch('method')
 
   const onsubmit = (data) => {
-    console.warn(data.method)
+    // console.warn(data.method)
     setFunc({
-      funcion: data.funcion,
+      funcion: data.funcion.toLowerCase(),
       calcular: true,
       metodo: data.method,
       xi: +data.xi,
