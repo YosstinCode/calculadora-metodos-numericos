@@ -11,7 +11,13 @@ export const FuncionContextProvider = ({ children }) => {
     xi: '',
     xf: '',
     root: '',
-    froot: ''
+    froot: '',
+    clear: false,
+    iteraciones: [],
+    funcString: '',
+    dyString: '',
+    dy2String: '',
+    isRoot: false
   })
 
   return (

@@ -1,6 +1,6 @@
 import { Grid } from 'gridjs-react'
 import 'gridjs/dist/theme/mermaid.css'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState, memo } from 'react'
 
 import FuncionContext from '../context/funcionContext'
 import { methodBisection, methodNewton } from '../utils/Evaluate'
@@ -13,57 +13,80 @@ const TableMethods = () => {
   const { func, setFunc } = useContext(FuncionContext)
 
   useEffect(() => {
-    let dataSet; let raiz
+    console.log(func.metodo)
+    let dataSet
+    let raiz
+    let froot
+    let funcStr
+    let dyStr
+    let dy2Str
     if (func.metodo === 'Newton') {
-      const { table, root } = methodNewton(func.funcion, func.xi)
+      console.log(func.metodo)
+      const { table, root, y, funcString, dyString, dy2String } = methodNewton(func.funcion, func.xi)
       raiz = root
       dataSet = table
+      froot = y
+      funcStr = funcString
+      dyStr = dyString
+      dy2Str = dy2String
     } else {
-      const { table, root } = methodBisection(func.funcion, func.xi, func.xf)
+      const { table, root, funcString } = methodBisection(func.funcion, func.xi, func.xf)
       dataSet = table
       raiz = root
+      funcStr = funcString
     }
-    setData(dataSet.slice(1, dataSet.length))
-    setColumn(dataSet[0])
-    console.log(raiz)
+    const columns = dataSet[0]
+    const iteraciones = dataSet.slice(1, dataSet.length)
+
+    setData(iteraciones)
+    setColumn(columns)
     if (!root) {
       setFunc({
         ...func,
-        root: raiz
+        root: raiz,
+        froot,
+        iteraciones,
+        funcStr,
+        dyStr,
+        dy2Str
       })
     }
     setRoot(true)
-  }, [func, func.funcion, func.metodo, func.xi, root, setFunc])
+    if (root) {
+      setFunc({
+        ...func,
+        isRoot: root
+      })
+    }
+  }, [root, setFunc])
 
   return (
-    <div className=''>
+    <div className="">
+      <Grid
+        data={data}
+        columns={column}
+        search={true}
+        language={{
+          search: {
+            placeholder: '🔍 Busca en la tabla...'
+          },
+          pagination: {
+            previous: 'Anteriores',
+            next: 'Siguientes',
+            showing: 'Mostrando',
+            of: 'de',
+            to: 'hasta',
+            results: () => 'Iteraciones 😎'
+          }
+        }}
+        pagination={{
+          enabled: true,
+          limit: 5
+        }}
 
-    <Grid
-  data={data}
-  columns={column}
-  search={true}
-  language={
-    {
-      search: {
-        placeholder: '🔍 Busca en la tabla...'
-      },
-      pagination: {
-        previous: 'Anteriores',
-        next: 'Siguientes',
-        showing: 'Mostrando',
-        of: 'de',
-        to: 'hasta',
-        results: () => 'Iteraciones 😎'
-      }
-    }
-  }
-  pagination={{
-    enabled: true,
-    limit: 5
-  }}
-/>
+      />
     </div>
   )
 }
 
-export default TableMethods
+export default memo(TableMethods)

@@ -8,33 +8,45 @@ const Graph = () => {
   const [error, setError] = useState(false)
   const { func } = useContext(FuncionContext)
 
-  console.log(func.root)
+  const graph = useCallback(() => {
+    const pointsLineals = []
+    const points = []
+    let text = ''
 
-  const graph = useCallback((domaniny, domainx) => {
+    if (func.metodo === 'Newton') {
+      points.push([func.root, func.froot])
+      pointsLineals.push(
+        [0, 0],
+        [func.root, func.froot],
+        [100, func.froot],
+        [-100, func.froot]
+      )
+      text = 'Max o Min'
+    } else {
+      points.push([func.root, 0])
+      pointsLineals.push(
+        [0, 0],
+        [func.root, 0],
+        [func.root, 100],
+        [func.root, -100]
+      )
+      text = 'raiz'
+    }
+
     try {
-      console.log(func.root)
       functionPlot({
         width: 776,
         target: '#grafica',
-        yAxis: { domain: domaniny },
-        xAxis: { domain: domainx },
         data: [{
           fn: `${func.funcion}`
         }, {
-          points: [
-            [0, 0],
-            [func.root, 0],
-            [func.root, 100],
-            [func.root, -100]
-          ],
+          points: pointsLineals,
           fnType: 'points',
           graphType: 'polyline',
           color: 'cyan'
         },
         {
-          points: [
-            [func.root, 0]
-          ],
+          points,
           fnType: 'points',
           graphType: 'scatter',
           color: 'purple',
@@ -45,7 +57,7 @@ const Graph = () => {
         }],
         annotations: [{
           x: func.root,
-          text: 'Raíz',
+          text,
           y: 0
         }],
         tip: {
@@ -57,10 +69,10 @@ const Graph = () => {
       setError(true)
       console.log(error)
     }
-  }, [func])
+  }, [func.froot, func.funcion, func.metodo, func.root])
 
   useEffect(() => {
-    graph([-10, 10], [-10, 10])
+    graph()
   }, [graph])
 
   return (
@@ -69,7 +81,9 @@ const Graph = () => {
 
         error
           ? <p className='text-red-500 text-2xl text-center font-Nunito font-semibold'>Verifica la función, puede estar mal escrita.</p>
-          : <div className='flex bg-white rounded-[20px] justify-center items-center ' id='grafica'></div>
+          : <>
+          <div className='flex bg-white rounded-[20px] justify-center items-center ' id='grafica'></div>
+          </>
       }
     </div>
   )

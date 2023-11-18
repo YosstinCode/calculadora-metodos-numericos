@@ -7,6 +7,12 @@ const methodNewton = (func, xi) => {
   const dy = math.derivative(func, 'x')
   const dy2 = math.derivative(dy, 'x')
 
+  const funcString = math.parse(func).toTex()
+  const dyString = dy.toTex()
+  const dy2String = dy2.toTex()
+
+  console.log(funcString, dyString, dy2String)
+
   let iteracion = 1
 
   const table = [['Iteración', 'Xi', 'f\'(x)', 'f\'\'(x)', 'Xi+1', 'Error Aproximado']]
@@ -41,12 +47,12 @@ const methodNewton = (func, xi) => {
     iteracion++
   }
 
-  const totalX = table.map((item) => item[1])
+  const y = math.evaluate(func, { x: xi })
 
-  return { table, root: xi, totalX }
+  return { table, root: xi, y, funcString, dyString, dy2String }
 }
 
-// console.table(methodNewton('-5x^2+3x-2', 0))
+// console.table(methodNewton('x^2-4', 10).table)
 
 const methodBisection = (func, xi, xf) => {
   let iteracion = 1
@@ -94,12 +100,13 @@ const methodBisection = (func, xi, xf) => {
     x = xr
     iteracion++
   }
+  const funcString = math.parse(func).toTex()
 
   const totalX = table.map((item) => item[3])
 
-  return { table, root: xr, totalX }
+  return { table, root: xr, totalX, funcString }
 }
 
-// console.table(methodBisection('-0.5x^2 + 2.5x + 4.5', 5, 10).table)
+console.table(methodBisection('-0.5x^2 + 2.5x + 4.5', 5, 10).table)
 
 export { methodNewton, methodBisection }
