@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import FuncionContext from '../context/funcionContext'
+import { FuncionContext } from '../context/context'
 
 const Form = () => {
   const { func, setFunc } = useContext(FuncionContext)

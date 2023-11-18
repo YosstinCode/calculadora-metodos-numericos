@@ -2,8 +2,8 @@ import { Grid } from 'gridjs-react'
 import 'gridjs/dist/theme/mermaid.css'
 import { useContext, useEffect, useState, memo } from 'react'
 
-import FuncionContext from '../context/funcionContext'
 import { methodBisection, methodNewton } from '../utils/Evaluate'
+import { FuncionContext } from '../context/context'
 
 const TableMethods = () => {
   const [data, setData] = useState([])

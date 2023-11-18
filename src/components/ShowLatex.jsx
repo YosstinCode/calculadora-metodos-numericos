@@ -1,7 +1,7 @@
 import Latex from 'react-latex-next'
 import 'katex/dist/katex.min.css'
 import { useContext, useEffect, useState } from 'react'
-import FuncionContext from '../context/funcionContext'
+import { FuncionContext } from '../context/context'
 import * as math from 'mathjs'
 
 const ShowLatex = () => {

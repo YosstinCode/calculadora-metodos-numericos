@@ -5,7 +5,7 @@ import Form from './components/Form'
 import Calculate from './components/Calculate'
 import ButtonClear from './components/ButtonClear'
 import ButtonHelp from './components/ButtonHelp'
-import { FuncionContextProvider } from './context/funcionContext'
+import { FuncionContextProvider } from './context/context'
 
 function App () {
   return (

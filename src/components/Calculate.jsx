@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import FuncionContext from '../context/funcionContext'
+import { FuncionContext } from '../context/context'
 
 import Graph from './Graph'
 import SubTitle from './SubTitle'

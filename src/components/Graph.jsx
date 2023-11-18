@@ -1,5 +1,5 @@
 import { useContext, useEffect, useCallback, useState } from 'react'
-import FuncionContext from '../context/funcionContext'
+import { FuncionContext } from '../context/context'
 import functionPlot from 'function-plot'
 
 // import * as math from 'mathjs'

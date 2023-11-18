@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react'
 
-const Context = createContext()
+export const FuncionContext = createContext()
 
 export const FuncionContextProvider = ({ children }) => {
   const [func, setFunc] = useState({
@@ -21,10 +21,8 @@ export const FuncionContextProvider = ({ children }) => {
   })
 
   return (
-    <Context.Provider value={{ func, setFunc }}>
+    <FuncionContext.Provider value={{ func, setFunc }}>
       {children}
-    </Context.Provider>
+    </FuncionContext.Provider>
   )
 }
-
-export default Context
