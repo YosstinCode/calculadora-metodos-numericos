@@ -1,4 +1,3 @@
-import { FuncionContextProvider } from './context/funcionContext'
 import Title from './components/Title'
 import ShowLatex from './components/ShowLatex'
 import Form from './components/Form'
@@ -6,6 +5,7 @@ import Form from './components/Form'
 import Calculate from './components/Calculate'
 import ButtonClear from './components/ButtonClear'
 import ButtonHelp from './components/ButtonHelp'
+import { FuncionContextProvider } from './context/funcionContext'
 
 function App () {
   return (
