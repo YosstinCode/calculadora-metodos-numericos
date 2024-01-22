@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.1.2",
     "function-plot": "^1.23.3",
     "gridjs": "^6.0.6",
     "gridjs-react": "^6.0.1",
